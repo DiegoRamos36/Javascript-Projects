@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!--Estilos CSS-->
+  <style>
+    *{
+  margin: 0;
+  padding: 0;
+}
+header {
+  width: 100%;
+  height: 30%;
+  border: 1px solid red;
+  display: block;
+  background: lightblue
+}
+.fundo{
+  background-image: #e2e2e2;
+  height: 100vh;
+  color: black;
+  font-family: Helvetica, Arial;
+  text-align: center;
+}
+.calculadora{
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  border-radius: 15px;
+  padding: 15px;
+  color: #fff;
+}
+.botao{
+  width: 48px;
+  height: 35px;
+  font-size: 25px;
+  cursor: pointer;
+  background-color: rgb(31,31,31);
+  border: none;
+  color: #fff;
+}
+.botao:hover{
+  background-color: black;
+}
+#resultado{
+  background-color: white;
+  width: 150px;
+  height: 25px;
+  margin: 5px;
+  font-size: 25px;
+  color: red;
+  text-align: right;
+  padding: 5px;
+}
+
+
+
+.fundo2{
+  background-image: #e2e2e2;
+  height: 100vh;
+  color: black;
+  font-family: Helvetica, Arial;
+  text-align: center;
+}
+
+.calculadora2{
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  top: 50%;
+  left: 25%;
+  transform: translate(-50%,-50%);
+  border-radius: 15px;
+  padding: 15px;
+  color: #fff;
+}
+
+
+#resultado2{
+  background-color: white;
+  width: 207px;
+  height: 23px;
+  margin: 5px;
+  font-size: 25px;
+  color: red;
+  text-align: right;
+  padding: 5px;
+}
+
+.botao2{
+  width: 40px;
+  height: 45px;
+  font-size: 20px;
+  cursor: pointer;
+  background-color: rgba(28, 28, 28, 0.6);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+}
+.botao2:hover{
+  background-color: black;
+}
+
+  </style>
+  <title>Calculadora</title>
+</head>
+<!--INTERFACE HTML-->
+<body>
+  <div class="fundo">
+    <div class="calculadora">
+        <h1>Romano</h1>
+        <p id="resultado"></p>
+        <table>
+            <tr>
+                <td><button disabled="disabled"></button></td>
+                <td><button class="botao" onclick="limpar()">C</button></td>
+                <td><button class="botao" onclick="back()">↦</button></td>
+                
+            </tr>
+            <tr>
+                <td><button class="botao" onclick="insert('7')">7</button></td>
+                <td><button class="botao" onclick="insert('8')">8</button></td>
+                <td><button class="botao" onclick="insert('9')">9</button></td>
+                
+              
+            </tr>
+            <tr>
+                <td><button class="botao" onclick="insert('4')">4</button></td>
+                <td><button class="botao" onclick="insert('5')">5</button></td>
+                <td><button class="botao" onclick="insert('6')">6</button></td>
+                
+                
+            </tr>
+            <tr>
+                <td><button class="botao" onclick="insert('1')">1</button></td>
+                <td><button class="botao" onclick="insert('2')">2</button></td>
+                <td><button class="botao" onclick="insert('3')">3</button></td>
+                
+            </tr>
+            <tr>
+                <td rowspan="1" colspan="3"><button class="botao" style="width: 150px;" onclick="calcular()">=</button></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<div class="fundo2">
+    <div class="calculadora2">
+        <h1>Árabe</h1>
+        <p id="resultado2" style="width: 150px"></p>
+        <table>
+            <tr>
+                <td><button class="botao2" onclick="insert2('M')">M</button></td>
+                <td><button disabled="disabled"></button></td>
+                <td><button class="botao2" onclick="limpar2()">E</button></td>
+                <td colspan="1"><button class="botao2" onclick="back2()">↦</button></td>
+            </tr>
+            <tr>
+                <td><button class="botao2" onclick="insert2('L')">L</button></td>
+                <td><button class="botao2" onclick="insert2('C')">C</button></td>
+                <td><button class="botao2" onclick="insert2('D')">D</button></td>   
+                <td rowspan="2" colspan="1"><button class="botao2" style="height: 92px;" onclick="calcular2()">=</button></td> 
+            </tr>
+            <tr>
+                <td><button class="botao2" onclick="insert2('I')">I</button></td>
+                <td><button class="botao2" onclick="insert2('V')">V</button></td>
+                <td><button class="botao2" onclick="insert2('X')">X</button></td>
+                
+               
+            </tr>
+           
+        </table>
+    </div>
+</div>
+<!--Lógica Javascript-->
+<script>
+    //Definindo variaveis de controle 
+let arabic = 0; 
+let contadorDeRepeticao = 0;
+let roman = '';
+//Inicio da função para converter números romanos pra normal
+function convertToNormal (romano){
+
+  //Definindo os valores respectivos aos numeros
+    const numsRomano = {
+    'I': 1,
+    'V': 5,
+    'X': 10,
+    'L': 50,
+    'C': 100,
+    'D': 500,
+    'M': 1000
+  }; 
+  for (let i = 0; i < romano.length && i<4000; i++){
+    if (numsRomano[romano[i]] < numsRomano[romano[i +1]]){
+      arabic -= numsRomano[romano[i]];
+      contadorDeRepeticao = 0;
+    } else {
+      arabic += numsRomano[romano[i]];
+
+      //Verificar se o algarismo romano se repete
+      if(romano[i] === romano[i + 1]){
+        contadorDeRepeticao++;
+      } else {
+        contadorDeRepeticao = 0;
+      }
+    }
+    if (contadorDeRepeticao > 2) {
+      return 'Número inválido.';
+  }
+  }
+  return arabic;
+}
+//Fim da função
+
+//Inicio da função de converter numero normal (arabico) para romano
+function normalToRoman (arabic){
+  if(arabic < 1 || arabic >= 4000){
+    return 'Número iválido';
+  }
+
+  const numsNormal = [
+    { arabic: 1000, roman: 'M' },
+    { arabic: 900, roman: 'CM' },
+    { arabic: 500, roman: 'D' },
+    { arabic: 400, roman: 'CD' },
+    { arabic: 100, roman: 'C' },
+    { arabic: 90, roman: 'XC' },
+    { arabic: 50, roman: 'L' },
+    { arabic: 40, roman: 'XL' },
+    { arabic: 10, roman: 'X' },
+    { arabic: 9, roman: 'IX' },
+    { arabic: 5, roman: 'V' },
+    { arabic: 4, roman: 'IV' },
+    { arabic: 1, roman: 'I' }
+];
+
+for (let i = 0; i < numsNormal.length && i<4000; i++) {
+  while (arabic >= numsNormal[i].arabic) {
+      roman += numsNormal[i].roman;
+      arabic -= numsNormal[i].arabic;
+  }
+}
+return roman;
+}
+//Fim da função
+
+function limpar()
+{
+    document.getElementById('resultado').innerHTML = '';
+    roman = '';
+}
+
+function calcular()
+{
+    var resultado = document.getElementById('resultado').innerHTML;
+    if(resultado)
+    {
+        document.getElementById('resultado').innerHTML = normalToRoman(resultado);
+    }
+    else
+    {
+        document.getElementById('resultado').innerHTML = "Nada..."
+    }
+}
+
+
+
+function insert(num)
+{
+    var numero = document.getElementById('resultado').innerHTML;
+    document.getElementById('resultado').innerHTML = numero + num;
+}
+
+
+function back()
+{
+    var resultado = document.getElementById('resultado').innerHTML;
+    document.getElementById('resultado').innerHTML = resultado.substring(0, resultado.length -1);
+}
+
+//Calculadora 2 
+
+function calcular2()
+{
+    var resultado2 = document.getElementById('resultado2').innerHTML;
+    if(resultado2)
+    {
+        document.getElementById('resultado2').innerHTML = convertToNormal(resultado2);
+    }
+    else
+    {
+        document.getElementById('resultado2').innerHTML = "Nada..."
+    }
+}
+
+function limpar2()
+{
+    document.getElementById('resultado2').innerHTML = '';
+    arabic = 0;
+}
+
+function back2()
+{
+    var resultado2 = document.getElementById('resultado2').innerHTML;
+    document.getElementById('resultado2').innerHTML = resultado2.substring(0, resultado2.length -1);
+}
+
+function insert2(num)
+{
+    var numero = document.getElementById('resultado2').innerHTML;
+    document.getElementById('resultado2').innerHTML = numero + num;
+}
+
+</script>
+</body>
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    *{
+      margin: 0;
+      padding: 0;  
+    }
+    body {
+      background: #e2e2e2;
+    }
+
+    .botao {
+     
+      height: 50px;
+      color: white;
+      font-family: Arial, Helvetica, sans-serif;
+      letter-spacing: 3px;
+      box-shadow: none;
+      text-decoration: none;
+      border-style: none;
+      background: rgba(26,26,26,0.7);
+      border-radius: 10px;
+      text-transform: uppercase;
+      cursor: pointer;
+      padding: 10px;
+      margin-left: 30px;
+    }
+    .botao:hover{
+      background: black;
+      color: white;
+    }
+    #retornar{
+      width: 200px;
+      background: rgba(26,26,26,0.9);
+      font-size: 23px;
+      border-radius: 10px;
+      color: white;
+      font-family: 'Times New Roman', Times, sans-serif;
+      margin-left: 30px;
+      border-style: none;
+      padding: 15px;
+      margin-top: 50px;
+    }
+    .botao2{
+      border-style: none;
+      padding: 5px;
+      color: white;
+      background: none;
+      cursor: pointer;
+      font-size: 15px;
+    }
+    .botao2:hover{
+      background: rgba(26,26,26,0.9);
+    }
+    #resultado{
+      border-radius: 5px;
+      height: 25px;
+      width: 180px;
+    }
+
+    #fundo {
+      width: 200px;
+      background: rgba(26,26,26,0.9);
+      border-radius: 10px;
+      padding: 15px;
+      color: white;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+      font-size: 13px;
+      font-style: oblique;
+      font-weight: bold;
+    }
+
+    #fundo button {
+      background: none;
+      color: white;
+      padding: 5px;
+      border-radius: 5px;
+      border-style: none;
+      margin-top: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    #fundo  button:hover{
+      background: #fff;
+      color: black;
+    }
+    
+
+    li {
+      list-style: none;
+    }
+  </style>
+  <title>Manipulando o DOM</title>
+</head>
+<body>
+  <button class="botao" onclick="alterarValor()">Clique aqui</button>
+
+  
+  <div id="retornar">
+    <form onsubmit="event.preventDefault(); obterValor()">
+      <label for="resultado">Digite um numero pra saber se ele é par ou ímpar</label>
+      <br>
+      <input type="text" placeholder="Ex: 1" id="resultado">
+      <button type="submit" onclick="console.log('Registrado')" class="botao2" preventDefault()>Enviar</button>
+    </form>
+    <button onclick="parImpar()" class="botao2">Verificar</button>
+  </div>
+
+
+  <div id="fundo" style="margin: 30px;">
+    <ul>
+      <h2>Selecione a cor do fundo deste site</h2>
+      <li><button class="amarelo" onclick="trocarCor('#FFDF00')">Amarelo</button></li>
+      <li><button class="bege" onclick="trocarCor('#E8D3B6')">Bege</button></li>
+      <li><button class="cinza" onclick="trocarCor('#D3D3D3')">Cinza</button></li>
+      <li><button class="branco" onclick="trocarCor('#FFF')">Branco</button></li>
+      <li><button class="azul" onclick="trocarCor('#BBF3F9')">Azul-Claro</button></li>
+    </ul>
+  </div>
+
+
+
+  <script>
+    let fundo = 'azul';
+    let valor = 0;
+    function alterarValor () {
+     document.querySelector('.botao').innerHTML = 'Botão Clicado!';
+    }
+    function obterValor(){
+      valor = document.getElementById('resultado').value;
+    }
+    function parImpar(){
+      if(valor%2==0){
+       alert('Ele é par!!');
+      } else {
+        alert('Ele é ímpar!!');
+      }
+    }
+    function trocarCor(cor) {
+     let fundo = document.body;
+     fundo.style.background = cor;
+    }
+  </script>
+</body>
+</html>
